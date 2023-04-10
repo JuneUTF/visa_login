@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/style.css">
+    <title>ビザ管理システム 削除サイト</title>
+</head>
+<body>
+    <div class="notification update" style="padding-top: 50px;">
+    <h3>ビザ管理システム 削除サイト</h3>
+        <div class="error">
+        <div class="success" th:if="${success}">
+          <span>○</span><span th:text="${success}"></span>
+        </div>
+        <div class="warning" th:if="${warning}">
+          <span>❢</span><span th:text="${warning}"></span>
+        </div>
+        </div>
+      <div th:if="${showa}">
+      	<a class="a_home" th:href="@{/home}">ホーム</a>
+      <a class="a_new" th:href="@{/register}">新規</a>
+      </div>
+      <a class="shinki logout" th:href="@{/logout}">ログアウト</a>
+		<a class="shinki user" th:href="@{/user/search?search=username&searchkey={id}(id=${#authentication.principal.username})}" th:text="${#authentication.principal.username}"></a>
+    </div>
+
+      <div class="home" th:if="${user}" th:each="user : ${user}">
+        <table>
+          <caption>ビザ管理システム</caption>  
+          <thead>
+            <tr>
+              <td>社員コード</td>
+              <td>名前</td>
+              <td>ビザ期限</td>
+               <td>在留資格</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td th:text="${user.id}"></td>
+              <td th:text="${user.name}"></td>
+              <td th:text="${user.visa}"></td>
+              <td th:text="${user.visatype}" ></td>
+            </tr>
+          </tbody>
+        
+        </table>
+        <form th:action="@{/delete/{id}(id=${user.id})}" method="post" class="delete">
+  		<p><span th:text=${user.name}></span>の情報が削除しますか？</p>
+  			<a class="a_home" th:href="@{/user}">ホーム戻り</a>
+  			<a class="a_home" th:href="@{/update/{id} (id=${user.id})}">更新</a>
+  			<button type="submit">決定</button>
+</form>
+    </div>
+</body>
+</html>

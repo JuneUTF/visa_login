@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/style.css">
+    <title>ビザ管理システム ホームサイト</title>
+</head>
+<body>
+    <div class="notification update">
+    <h3>管理者　確認サイト<h3>
+        <div class="error">
+        <div class="success" th:if="${success}">
+          <span>○</span><span th:text="${success}"></span>
+        </div>
+        <div class="warning" th:if="${warning}">
+          <span>❢</span><span th:text="${warning}"></span>
+        </div>
+      </div>
+    </div>
+      <div class="home">
+        <table>
+          <caption>ビザ管理システム</caption>
+          <form th:action="@{/user/search}" method="get" class="search">
+	<select name="search" id="">
+		<option value="id">社員コード</option>
+		<option value="username">名前</option>
+	</select>
+	<input type="text" name="searchkey">
+	<button type="submit">検索</button>
+</form>
+		<a class="shinki logout" th:href="@{/logout}">ログアウト</a>
+		<a class="shinki user" th:href="@{/user/search?search=username&searchkey={id}(id=${#authentication.principal.username})}" th:text="${#authentication.principal.username}"></a>
+          <a class="shinki" th:href="@{/admin/register}">新規</a>
+          
+          <thead>
+            <tr>
+              <td>社員コード</td>
+              <td>ユーザー名</td>
+              <td>名前</td>
+              <td>ビザ期限</td>
+              <td>残り</td>
+               <td>在留資格</td>
+               <td>状態</td>
+              <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">行動</td>
+            </tr>
+          </thead>
+          <tbody th:each="user : ${user}">
+            <tr th:style="${user.color ==0 ? 'background-color: #f4c2c2;' : (user.color == 1? 'background-color: #f4f7cc;' : 'background-color: #c5f4c2;')}">
+              <td th:text="${user.id}"></td>
+              <td th:text="${user.username}"></td>
+              <td th:text="${user.name}"></td>
+              <td th:text="${user.visa}"></td>
+              <td th:text="${user.remday}" ></td>
+              <td th:text="${user.visatype}" ></td>
+              <td th:text="${user.status}" ></td>
+              <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                <a class="button-1" th:href="@{/update/{id}(id=${user.id})}">更新</a>
+                <a class="button-2" th:href="@{/delete/{id}(id=${user.id})}">削除</a>
+              </td>
+            </tr>
+          </tbody>
+        
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bteam.mapper.UpdateMapper">
+    <select id="SelectUpdateId"  resultType ="com.bteam.model.UpdateModel">
+    SELECT * FROM visa_user WHERE id= #{id}
+    </select>
+    <update id="InsertUpdateUser" parameterType="com.bteam.model.UpdateModel" useGeneratedKeys="true" keyProperty="id">
+       UPDATE visa_user SET
+    username = #{username},
+    <if test="password != null">password = #{password},</if>
+    name = #{name},
+    visa = #{visaday},
+    visatype = #{visatype},
+    status = #{status}
+WHERE id = #{id}
+    </update>
+
+ <select id="CheckUser"  resultType ="com.bteam.model.UpdateModel">
+    SELECT username FROM visa_user WHERE username= #{username} AND id!=#{id}
+    </select>
+</mapper>

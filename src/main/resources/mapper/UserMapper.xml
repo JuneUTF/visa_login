@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bteam.mapper.UserMapper">
+    <select id="checkpendding"  resultType ="com.bteam.model.UserModel">
+    SELECT status FROM visa_user WHERE username= #{username}
+    </select>
+    <select id="selectAll" resultType="com.bteam.model.UserModel">
+       SELECT id,username, name, visa, visatype FROM visa_user WHERE status != 'DELETED' ORDER BY id DESC
+    </select>
+    <select id="searchuser" resultType="com.bteam.model.UserModel">
+        SELECT id,username,name,visa,visatype FROM visa_user where username = #{searchuser} AND status!='DELETED';
+    </select>
+    <select id="searchid" resultType="com.bteam.model.UserModel">
+        SELECT id,name,username,visa,visatype FROM visa_user where id = #{searchid} AND status!='DELETED';
+    </select>
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bteam.mapper.UserRegisterMapper">
+
+    <insert id="insert" parameterType="com.bteam.model.UserRegisterModel" >
+    INSERT  INTO visa_user(username, password, name, visa, visatype,status)  VALUES (#{username},#{password},#{name},#{visa},#{visatype},'PENDING')
+    </insert>
+    <select id="checkuser"  resultType ="com.bteam.model.UserRegisterModel">
+    SELECT username FROM visa_user WHERE username= #{username}
+    </select>
+
+</mapper>

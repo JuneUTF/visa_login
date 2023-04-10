@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bteam.mapper.AdminMapper">
+
+    <insert id="AdminRegisterUser" parameterType="com.bteam.model.AdminModel" >
+    INSERT  INTO visa_user(username, password, name, visa, visatype,status)  VALUES (#{username},#{password},#{name},#{visaday},#{visatype},'ACTIVE')
+    </insert>
+    <select id="AdminCheckUser"  resultType ="com.bteam.model.AdminModel">
+    SELECT username FROM visa_user WHERE username= #{username}
+    </select>
+    <select id="AdminSelectAll"  resultType ="com.bteam.model.AdminModel">
+    SELECT id,username, name, visa, visatype,status FROM visa_user ORDER BY id DESC
+    </select>
+    <select id="AdminSelectPending"  resultType ="com.bteam.model.AdminModel">
+    SELECT id,username, name, visa, visatype,status FROM visa_user WHERE status = 'PENDING' ORDER BY id DESC
+    </select>
+    <select id="AdminSelectDeleted" resultType="com.bteam.model.AdminModel">
+       SELECT id,username, name, visa, visatype,status FROM visa_user WHERE status = 'DELETED' ORDER BY id DESC
+    </select>
+    <select id="AdminSearchUser" resultType="com.bteam.model.AdminModel">
+        SELECT id,username,name,visa,visatype,status FROM visa_user where username = #{searchuser} 
+    </select>
+    <select id="AdminSearchId" resultType="com.bteam.model.AdminModel">
+        SELECT id,name,username,visa,visatype,status FROM visa_user where id = #{searchid}
+    </select>
+	
+</mapper>
